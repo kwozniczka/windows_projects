@@ -1,15 +1,15 @@
 
-// winDoc.cpp : implementation of the CwinDoc class
+// WinDoc.cpp : implementation of the CWinDoc class
 //
 
 #include "stdafx.h"
 // SHARED_HANDLERS can be defined in an ATL project implementing preview, thumbnail
 // and search filter handlers and allows sharing of document code with that project.
 #ifndef SHARED_HANDLERS
-#include "win.h"
+#include "Win.h"
 #endif
 
-#include "winDoc.h"
+#include "WinDoc.h"
 
 #include <propkey.h>
 
@@ -17,27 +17,27 @@
 #define new DEBUG_NEW
 #endif
 
-// CwinDoc
+// CWinDoc
 
-IMPLEMENT_DYNCREATE(CwinDoc, CDocument)
+IMPLEMENT_DYNCREATE(CWinDoc, CDocument)
 
-BEGIN_MESSAGE_MAP(CwinDoc, CDocument)
+BEGIN_MESSAGE_MAP(CWinDoc, CDocument)
 END_MESSAGE_MAP()
 
 
-// CwinDoc construction/destruction
+// CWinDoc construction/destruction
 
-CwinDoc::CwinDoc()
+CWinDoc::CWinDoc()
 {
 	// TODO: add one-time construction code here
 
 }
 
-CwinDoc::~CwinDoc()
+CWinDoc::~CWinDoc()
 {
 }
 
-BOOL CwinDoc::OnNewDocument()
+BOOL CWinDoc::OnNewDocument()
 {
 	if (!CDocument::OnNewDocument())
 		return FALSE;
@@ -51,9 +51,9 @@ BOOL CwinDoc::OnNewDocument()
 
 
 
-// CwinDoc serialization
+// CWinDoc serialization
 
-void CwinDoc::Serialize(CArchive& ar)
+void CWinDoc::Serialize(CArchive& ar)
 {
 	if (ar.IsStoring())
 	{
@@ -68,7 +68,7 @@ void CwinDoc::Serialize(CArchive& ar)
 #ifdef SHARED_HANDLERS
 
 // Support for thumbnails
-void CwinDoc::OnDrawThumbnail(CDC& dc, LPRECT lprcBounds)
+void CWinDoc::OnDrawThumbnail(CDC& dc, LPRECT lprcBounds)
 {
 	// Modify this code to draw the document's data
 	dc.FillSolidRect(lprcBounds, RGB(255, 255, 255));
@@ -89,7 +89,7 @@ void CwinDoc::OnDrawThumbnail(CDC& dc, LPRECT lprcBounds)
 }
 
 // Support for Search Handlers
-void CwinDoc::InitializeSearchContent()
+void CWinDoc::InitializeSearchContent()
 {
 	CString strSearchContent;
 	// Set search contents from document's data. 
@@ -99,7 +99,7 @@ void CwinDoc::InitializeSearchContent()
 	SetSearchContent(strSearchContent);
 }
 
-void CwinDoc::SetSearchContent(const CString& value)
+void CWinDoc::SetSearchContent(const CString& value)
 {
 	if (value.IsEmpty())
 	{
@@ -119,19 +119,19 @@ void CwinDoc::SetSearchContent(const CString& value)
 
 #endif // SHARED_HANDLERS
 
-// CwinDoc diagnostics
+// CWinDoc diagnostics
 
 #ifdef _DEBUG
-void CwinDoc::AssertValid() const
+void CWinDoc::AssertValid() const
 {
 	CDocument::AssertValid();
 }
 
-void CwinDoc::Dump(CDumpContext& dc) const
+void CWinDoc::Dump(CDumpContext& dc) const
 {
 	CDocument::Dump(dc);
 }
 #endif //_DEBUG
 
 
-// CwinDoc commands
+// CWinDoc commands

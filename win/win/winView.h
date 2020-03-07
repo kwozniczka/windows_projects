@@ -1,19 +1,32 @@
 
-// winView.h : interface of the CwinView class
+// WinView.h : interface of the CWinView class
 //
 
 #pragma once
 
+#define RED RGB(255,0,0)
+#define GREEN RGB(153, 255, 153)
+#define PINK RGB(255, 204, 255)
+#define BLUE RGB(179, 240, 255)
+#define PEACH RGB(255, 187, 153)
+#define PURPLE RGB(230, 153, 255)
+#define YELLOW RGB(255, 255, 179)
 
-class CwinView : public CView
+#include <vector>
+
+
+static COLORREF colors[] = { BLUE, PINK, GREEN, PEACH, PURPLE, YELLOW };
+
+
+class CWinView : public CView
 {
 protected: // create from serialization only
-	CwinView();
-	DECLARE_DYNCREATE(CwinView)
+	CWinView();
+	DECLARE_DYNCREATE(CWinView)
 
 // Attributes
 public:
-	CwinDoc* GetDocument() const;
+	CWinDoc* GetDocument() const;
 
 // Operations
 public:
@@ -29,7 +42,7 @@ protected:
 
 // Implementation
 public:
-	virtual ~CwinView();
+	virtual ~CWinView();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;
@@ -43,10 +56,13 @@ protected:
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnContextMenu(CWnd* pWnd, CPoint point);
 	DECLARE_MESSAGE_MAP()
+
+private:
+	CRect* m_pClientRect;
 };
 
-#ifndef _DEBUG  // debug version in winView.cpp
-inline CwinDoc* CwinView::GetDocument() const
-   { return reinterpret_cast<CwinDoc*>(m_pDocument); }
+#ifndef _DEBUG  // debug version in WinView.cpp
+inline CWinDoc* CWinView::GetDocument() const
+   { return reinterpret_cast<CWinDoc*>(m_pDocument); }
 #endif
 

@@ -3,7 +3,7 @@
 //
 
 #include "stdafx.h"
-#include "win.h"
+#include "Win.h"
 
 #include "MainFrm.h"
 

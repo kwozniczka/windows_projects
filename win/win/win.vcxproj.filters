@@ -18,7 +18,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="win.h">
+    <ClInclude Include="Win.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
@@ -30,10 +30,10 @@
     <ClInclude Include="MainFrm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="winDoc.h">
+    <ClInclude Include="WinDoc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="winView.h">
+    <ClInclude Include="WinView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Resource.h">
@@ -42,9 +42,12 @@
     <ClInclude Include="ColorRect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Coordinates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="win.cpp">
+    <ClCompile Include="Win.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
@@ -53,18 +56,21 @@
     <ClCompile Include="MainFrm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="winDoc.cpp">
+    <ClCompile Include="WinDoc.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="winView.cpp">
+    <ClCompile Include="WinView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ColorRect.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Coordinates.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="win.rc">
+    <ResourceCompile Include="Win.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
@@ -72,10 +78,10 @@
     <Image Include="UserImages.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="res\winDoc.ico">
+    <Image Include="res\WinDoc.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="res\win.ico">
+    <Image Include="res\Win.ico">
       <Filter>Resource Files</Filter>
     </Image>
     <Image Include="res\Toolbar.bmp">
@@ -86,7 +92,7 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\win.rc2">
+    <None Include="res\Win.rc2">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -1,5 +1,5 @@
 
-// win.h : main header file for the win application
+// Win.h : main header file for the Win application
 //
 #pragma once
 
@@ -10,14 +10,14 @@
 #include "resource.h"       // main symbols
 
 
-// CwinApp:
-// See win.cpp for the implementation of this class
+// CWin1App:
+// See Win.cpp for the implementation of this class
 //
 
-class CwinApp : public CWinAppEx
+class CWin1App : public CWinAppEx
 {
 public:
-	CwinApp();
+	CWin1App();
 
 
 // Overrides
@@ -34,6 +34,8 @@ public:
 
 	afx_msg void OnAppAbout();
 	DECLARE_MESSAGE_MAP()
+
+
 };
 
-extern CwinApp theApp;
+extern CWin1App theApp;

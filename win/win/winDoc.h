@@ -1,20 +1,20 @@
 
-// winDoc.h : interface of the CwinDoc class
+// WinDoc.h : interface of the CWinDoc class
 //
 
 
 #pragma once
 
 
-class CwinDoc : public CDocument
+class CWinDoc : public CDocument
 {
 protected: // create from serialization only
-	CwinDoc();
-	DECLARE_DYNCREATE(CwinDoc)
+	CWinDoc();
+	DECLARE_DYNCREATE(CWinDoc)
 
 // Attributes
 public:
-
+	
 // Operations
 public:
 
@@ -29,7 +29,7 @@ public:
 
 // Implementation
 public:
-	virtual ~CwinDoc();
+	virtual ~CWinDoc();
 #ifdef _DEBUG
 	virtual void AssertValid() const;
 	virtual void Dump(CDumpContext& dc) const;

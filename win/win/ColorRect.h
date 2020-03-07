@@ -1,38 +1,36 @@
 #pragma once
-#include "atltypes.h"
+
 #include "afxdialogex.h"
-#include "stdafx.h"
+#define BLACK	RGB(0, 0, 0)
 
-#define BLACK RGB(0,0,0)
 
-class CColorRect : public CRect {
+class CColorRect: public CRect
+{
 
-	//konstruktory, destruktor
 public:
-	CColorRect(CRect* pRect = NULL, int penWidth = 0, COLORREF penColor = BLACK, COLORREF bkgColor = BLACK);
-	CColorRect(const CRect& /*...""....*/);
-	CColorRect(const CPoint& LeftTop, const CPoint& RightBottom /*...""...*/); //x,y
-	CColorRect(const CPoint&, const CSize& /*...""...*/);
+	CColorRect( CRect* pRect = NULL, int penWidth = 0, COLORREF penColor = BLACK, COLORREF bkgColor = BLACK );
+	CColorRect( const CRect& pRect = NULL, int penWidth = 0, COLORREF penColor = BLACK, COLORREF bkgColor = BLACK );
+	CColorRect( const CPoint& LeftTop, const CPoint& RightBottom, int penWidth=0, COLORREF penColor=BLACK, COLORREF bkgColor=BLACK);
+	CColorRect( const CPoint&, const CSize& size, int penWidth = 0, COLORREF penColor = BLACK, COLORREF bkgColor = BLACK );
 
 	~CColorRect();
 
 public:
-	void PaintRect(CDC* pDC);
-	void setAttr(int penWidth = 0, COLORREF penColor = BLACK, COLORREF bkgColor = BLACK);
+	void PaintRect( CDC* pDC, CRect rect );
+	void setAttr( int penWidth = 0, COLORREF penColor = BLACK, COLORREF bkgColor = BLACK );
 	CPen* getRectPen();
 	CBrush* getRectBrush();
 
-
 private:
-	void initAtrr();
-	void createAtrr(int penWidth, COLORREF penColor, COLORREF bkgColor);
+	void initAttr();
+	void createAttr( int penWidth = 0, COLORREF penColor = BLACK, COLORREF bkgColor = BLACK );
 
 private:
 	CPen* m_pPen;
 	CBrush* m_pBrush;
 
-
-
 };
+
+
 
 

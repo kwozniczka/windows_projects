@@ -1,25 +1,26 @@
 
-// win.cpp : Defines the class behaviors for the application.
+// Win.cpp : Defines the class behaviors for the application.
 //
 
 #include "stdafx.h"
 #include "afxwinappex.h"
 #include "afxdialogex.h"
-#include "win.h"
+#include "Win.h"
 #include "MainFrm.h"
 
-#include "winDoc.h"
-#include "winView.h"
+
+#include "WinDoc.h"
+#include "WinView.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
 
 
-// CwinApp
+// CWin1App
 
-BEGIN_MESSAGE_MAP(CwinApp, CWinAppEx)
-	ON_COMMAND(ID_APP_ABOUT, &CwinApp::OnAppAbout)
+BEGIN_MESSAGE_MAP(CWin1App, CWinAppEx)
+	ON_COMMAND(ID_APP_ABOUT, &CWin1App::OnAppAbout)
 	// Standard file based document commands
 	ON_COMMAND(ID_FILE_NEW, &CWinAppEx::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, &CWinAppEx::OnFileOpen)
@@ -28,9 +29,9 @@ BEGIN_MESSAGE_MAP(CwinApp, CWinAppEx)
 END_MESSAGE_MAP()
 
 
-// CwinApp construction
+// CWin1App construction
 
-CwinApp::CwinApp()
+CWin1App::CWin1App()
 {
 	m_bHiColorIcons = TRUE;
 
@@ -45,20 +46,20 @@ CwinApp::CwinApp()
 
 	// TODO: replace application ID string below with unique ID string; recommended
 	// format for string is CompanyName.ProductName.SubProduct.VersionInformation
-	SetAppID(_T("win.AppID.NoVersion"));
+	SetAppID(_T("Win.AppID.NoVersion"));
 
 	// TODO: add construction code here,
 	// Place all significant initialization in InitInstance
 }
 
-// The one and only CwinApp object
+// The one and only CWin1App object
 
-CwinApp theApp;
+CWin1App theApp;
 
 
-// CwinApp initialization
+// CWin1App initialization
 
-BOOL CwinApp::InitInstance()
+BOOL CWin1App::InitInstance()
 {
 	// InitCommonControlsEx() is required on Windows XP if an application
 	// manifest specifies use of ComCtl32.dll version 6 or later to enable
@@ -113,9 +114,11 @@ BOOL CwinApp::InitInstance()
 	CSingleDocTemplate* pDocTemplate;
 	pDocTemplate = new CSingleDocTemplate(
 		IDR_MAINFRAME,
-		RUNTIME_CLASS(CwinDoc),
-		RUNTIME_CLASS(CMainFrame),       // main SDI frame window
-		RUNTIME_CLASS(CwinView));
+		RUNTIME_CLASS( CWinDoc ),
+		RUNTIME_CLASS( CMainFrame ),     // main SDI frame window
+		//RUNTIME_CLASS( CTestForm ),
+
+		RUNTIME_CLASS(CWinView));
 	if (!pDocTemplate)
 		return FALSE;
 	AddDocTemplate(pDocTemplate);
@@ -138,7 +141,7 @@ BOOL CwinApp::InitInstance()
 	return TRUE;
 }
 
-int CwinApp::ExitInstance()
+int CWin1App::ExitInstance()
 {
 	//TODO: handle additional resources you may have added
 	AfxOleTerm(FALSE);
@@ -146,7 +149,7 @@ int CwinApp::ExitInstance()
 	return CWinAppEx::ExitInstance();
 }
 
-// CwinApp message handlers
+// CWin1App message handlers
 
 
 // CAboutDlg dialog used for App About
@@ -182,15 +185,15 @@ BEGIN_MESSAGE_MAP(CAboutDlg, CDialogEx)
 END_MESSAGE_MAP()
 
 // App command to run the dialog
-void CwinApp::OnAppAbout()
+void CWin1App::OnAppAbout()
 {
 	CAboutDlg aboutDlg;
 	aboutDlg.DoModal();
 }
 
-// CwinApp customization load/save methods
+// CWin1App customization load/save methods
 
-void CwinApp::PreLoadState()
+void CWin1App::PreLoadState()
 {
 	BOOL bNameValid;
 	CString strName;
@@ -199,15 +202,15 @@ void CwinApp::PreLoadState()
 	GetContextMenuManager()->AddMenu(strName, IDR_POPUP_EDIT);
 }
 
-void CwinApp::LoadCustomState()
+void CWin1App::LoadCustomState()
 {
 }
 
-void CwinApp::SaveCustomState()
+void CWin1App::SaveCustomState()
 {
 }
 
-// CwinApp message handlers
+// CWin1App message handlers
 
 
 
