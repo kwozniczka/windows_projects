@@ -72,71 +72,41 @@ void CWinView::OnDraw(CDC* pDC)
 	if (!pDoc)
 		return;
 
-	// TODO: add draw code for native data here
 
 	GetClientRect( m_pClientRect );
 
-	//CRect* rect;
-
-	std::pair<int, int> leftTopPoint( START_COORD, START_COORD );
-	////std::pair<int, int> leftTopPoint( START_COORD, m_pClientRect->bottom );
-
+	std::pair<int, int> leftTopPoint( START_COORD, 0.1 * m_pClientRect->Height());
 	std::pair<int, int> rightBottomPoint( ENDX, 0.9 * m_pClientRect->Height() );
-	////std::pair<int, int> rightBottomPoint( ENDX, 0.9 * m_pClientRect->bottom );
-	//CCoordinates coord( leftTopPoint, rightBottomPoint );
 
-	///////////////////////////////////////////
 
 	std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> lines;
 
-	for( int i = 0; i < SIZE_LINES - 1; i++ )
+	for( int i = 0; i < SIZE_LINES + 1; i++ )
 	{
 
 		std::pair<std::pair<int, int>, std::pair<int, int>> s;
+		//xy poczatek
 		s.first.first = START_COORD;
-		s.first.second = m_pClientRect->bottom * i / SIZE_LINES;
+		s.first.second = (0.8*m_pClientRect->bottom * i / SIZE_LINES) + 0.1*m_pClientRect->bottom;
 		
-		s.second.first = ENDX; //0.8 * m_pClientRect->right;
-		s.second.second = i * m_pClientRect->bottom / SIZE_LINES;
-
-		if( s.second.first < 200 )
-		{
-			s.second.first = 200;
-		}
-
-		if( /*s.first.second < 20*/s.first.second < START_COORD )
-		{
-			//s.first.second = 20;
-			s.first.second = START_COORD;
-			s.second.second = START_COORD;;
-		}
+		//xy koniec
+		s.second.first = ENDX;
+		s.second.second = (0.8*m_pClientRect->bottom * i / SIZE_LINES) + 0.1*m_pClientRect->bottom;
 
 		lines.push_back( s );
 	}
 
 	CCoordinates* coord = new CCoordinates( leftTopPoint, rightBottomPoint, lines );
-
-	//	cs->paintCoordinateSystemWithLines(pDC);
-
-
-	//////////////////////////////////////////////
 	coord->drawCoordinates( pDC );
 
 
 	for( int i = 0; i < 6; ++i )
 	{
-		CRect rect( START + i*( RECT_WIDTH + RIGHT_SHIFT ), START,
-			START + i*( RECT_WIDTH + RIGHT_SHIFT ) + RECT_WIDTH, 0.9 * m_pClientRect->Height() );
+		CRect rect( START + i*( RECT_WIDTH + RIGHT_SHIFT ), 0.35* m_pClientRect->Height(),  START + i*( RECT_WIDTH + RIGHT_SHIFT ) + RECT_WIDTH, 0.9 * m_pClientRect->Height() );
 		CColorRect* rectan = new CColorRect( &rect, 10, RED, colors[i]);
 
 		rectan->PaintRect( pDC, rect );
 	}
-
-
-	//rect.PaintRect( pDC );
-
-	//rect.setAttr( 10, RGB(255,0,0), RGB(0, 255,0) );
-	//rectan->PaintRect( pDC, rect1 );
 
 }
 
