@@ -1,0 +1,22 @@
+﻿  SortAppView.cpp
+c:\users\karolina\desktop\projekt\sortapp\sortapp\sortappview.cpp(50): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\karolina\desktop\projekt\sortapp\sortapp\sortappview.cpp(116): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\karolina\desktop\projekt\sortapp\sortapp\sortappview.cpp(120): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\karolina\desktop\projekt\sortapp\sortapp\sortappview.cpp(143): warning C4244: '=': conversion from 'double' to 'LONG', possible loss of data
+c:\users\karolina\desktop\projekt\sortapp\sortapp\sortappview.cpp(145): warning C4244: '=': conversion from 'double' to 'LONG', possible loss of data
+c:\users\karolina\desktop\projekt\sortapp\sortapp\sortappview.cpp(157): warning C4018: '<': signed/unsigned mismatch
+c:\program files (x86)\microsoft visual studio 14.0\vc\include\utility(172): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  c:\users\karolina\desktop\projekt\sortapp\sortapp\sortappview.cpp(104): note: see reference to function template instantiation 'std::pair<int,int>::pair<int,double,void,0>(_Other1 &&,_Other2 &&) noexcept' being compiled
+          with
+          [
+              _Other1=int,
+              _Other2=double
+          ]
+  c:\users\karolina\desktop\projekt\sortapp\sortapp\sortappview.cpp(104): note: see reference to function template instantiation 'std::pair<int,int>::pair<int,double,void,0>(_Other1 &&,_Other2 &&) noexcept' being compiled
+          with
+          [
+              _Other1=int,
+              _Other2=double
+          ]
+  SortApp.vcxproj -> C:\Users\Karolina\Desktop\projekt\SortApp\Debug\SortApp.exe
+  SortApp.vcxproj -> C:\Users\Karolina\Desktop\projekt\SortApp\Debug\SortApp.pdb (Partial PDB)
