@@ -35,9 +35,6 @@
 IMPLEMENT_DYNCREATE(CSortAppView, CView)
 
 BEGIN_MESSAGE_MAP(CSortAppView, CView)
-	ON_COMMAND(ID_PROSTE, &CSortAppView::OnSimpleSort)
-	ON_COMMAND(ID_SZYBKIE, &CSortAppView::OnQuickSort)
-	ON_COMMAND(ID_WSZYSTKIE, &CSortAppView::OnAllSort)
 END_MESSAGE_MAP()
 
 // CSortAppView construction/destruction
@@ -46,26 +43,13 @@ CSortAppView::CSortAppView()
 {
 	// TODO: add construction code here
 	this->m_pClientRect = new CRect;
-	tab = new int[TAB_SIZE];
-	srand(time(NULL));
-	for (int i = 0; i < TAB_SIZE; ++i)
-		tab[i] = rand() % 1000;
-
-
-	sorts.push_back(new InsertSort(tab));
-	sorts.push_back(new HeapSort(tab));
-	sorts.push_back(new BubbleSort(tab));
-	sorts.push_back(new HalfSort(tab));
-	sorts.push_back(new SelectSort(tab));
-	sorts.push_back(new QuickSort(tab));
-	
 
 }
 
 CSortAppView::~CSortAppView()
 {
 	delete m_pClientRect;
-	delete tab;
+	
 
 }
 
@@ -86,68 +70,17 @@ void CSortAppView::OnDraw(CDC* pDC)
 	if (!pDoc)
 		return;
 
+	
+	drawPlot(pDC);
+	drawSorts(pDC, pDoc);
 
-	GetClientRect(m_pClientRect);
-
-	std::pair<int, int> leftTopPoint(START_COORD, 0.1 * m_pClientRect->Height());
-	std::pair<int, int> rightBottomPoint(ENDX, 0.9 * m_pClientRect->Height());
-
-
-	std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> lines;
-
-	for (int i = 0; i < SIZE_LINES + 1; i++)
-	{
-
-		std::pair<std::pair<int, int>, std::pair<int, int>> s;
-		//xy poczatek
-		s.first.first = START_COORD;
-		s.first.second = (0.8*m_pClientRect->bottom * i / SIZE_LINES) + 0.1*m_pClientRect->bottom;
-
-		//xy koniec
-		s.second.first = ENDX;
-		s.second.second = (0.8*m_pClientRect->bottom * i / SIZE_LINES) + 0.1*m_pClientRect->bottom;
-
-		lines.push_back(s);
-	}
-
-	CCoordinates* coord = new CCoordinates(leftTopPoint, rightBottomPoint, lines);
-	coord->drawCoordinates(pDC);
 
 	/*
-	for (int i = 0; i < 6; ++i)
-	{
-		CRect rect(START + i*(RECT_WIDTH + RIGHT_SHIFT), 0.35* m_pClientRect->Height(), START + i*(RECT_WIDTH + RIGHT_SHIFT) + RECT_WIDTH, 0.9 * m_pClientRect->Height());
-		CColorRect* rectan = new CColorRect(&rect, 10, RED, colors[i]);
-
-		rectan->PaintRect(pDC, rect);
-	}*/
-
-	POINT leftTop;
-	POINT rightBottom;
-
-	for (int i = 0; i < 6; ++i)
-	{
-		leftTop.x = START + i*(RECT_WIDTH + RIGHT_SHIFT);
-		leftTop.y = 0.35* m_pClientRect->Height();
-		rightBottom.x = START + i*(RECT_WIDTH + RIGHT_SHIFT) + RECT_WIDTH;
-		rightBottom.y = 0.9 * m_pClientRect->Height();
-
-		//CRect rect( START + i*( RECT_WIDTH + RIGHT_SHIFT ), 0.35* m_pClientRect->Height(),  START + i*( RECT_WIDTH + RIGHT_SHIFT ) + RECT_WIDTH, 0.9 * m_pClientRect->Height() );
-		//CColorRect* rectan = new CColorRect( &rect, 10, RED, colors[i]);
-		//rectan->PaintRect( pDC, rect );
-
-		//CColorRect* rectan = new CColorRect(leftTop, rightBottom, 10, RED, colors[i]);
-		CRect r(leftTop, rightBottom);
-		CColorRect rectan(&r, 10, RED, colors[i]);
-		//rectan->PaintRect(pDC);
-		rectan.PaintRect(pDC);
-	}
-
-	for (int i = 0; i < sorts.size(); i++) {
+	for (int i = 0; i < pDoc->sorts.size(); i++) {
 		CString str1;
-		str1.Format(L"%d", (int)sorts[i]->GetSortTime());
+		str1.Format(L"%d", (int)pDoc->sorts[i]->GetSortTime());
 		pDC->TextOutW(10, 30*(i+1), str1);
-	}
+	}*/
 	
 }
 
@@ -175,22 +108,70 @@ CSortAppDoc* CSortAppView::GetDocument() const // non-debug version is inline
 
 
 
-// przycisk "proste"
-void CSortAppView::OnSimpleSort()
+void CSortAppView::drawPlot(CDC * pDC)
 {
-	// TODO: Add your command handler code here
+
+	GetClientRect(m_pClientRect);
+
+	std::pair<int, int> leftTopPoint(START_COORD, 0.1 * m_pClientRect->Height());
+	std::pair<int, int> rightBottomPoint(ENDX, 0.9 * m_pClientRect->Height());
+
+	std::vector<std::pair<std::pair<int, int>, std::pair<int, int>>> lines;
+
+
+	for (int i = 0; i < SIZE_LINES + 1; i++)
+	{
+
+		std::pair<std::pair<int, int>, std::pair<int, int>> s;
+		//xy poczatek
+		s.first.first = START_COORD;
+		s.first.second = (0.8*m_pClientRect->bottom * i / SIZE_LINES) + 0.1*m_pClientRect->bottom;
+
+		//xy koniec
+		s.second.first = ENDX;
+		s.second.second = (0.8*m_pClientRect->bottom * i / SIZE_LINES) + 0.1*m_pClientRect->bottom;
+
+		lines.push_back(s);
+	}
+
+	CCoordinates* coord = new CCoordinates(leftTopPoint, rightBottomPoint, lines);
+	coord->drawCoordinates(pDC);
 
 
 }
 
-
-void CSortAppView::OnQuickSort()
+void CSortAppView::drawRectangle(CDC * pDC, int amount)
 {
-	// TODO: Add your command handler code here
+
+	POINT leftTop;
+	POINT rightBottom;
+
+	for (int i = 0; i < amount; ++i)
+	{
+		leftTop.x = START + i*(RECT_WIDTH + RIGHT_SHIFT);
+		leftTop.y = 0.35* m_pClientRect->Height();
+		rightBottom.x = START + i*(RECT_WIDTH + RIGHT_SHIFT) + RECT_WIDTH;
+		rightBottom.y = 0.9 * m_pClientRect->Height();
+
+		//CColorRect* rectan = new CColorRect(leftTop, rightBottom, 10, RED, colors[i]);
+		CRect r(leftTop, rightBottom);
+		CColorRect rectan(&r, 10, RED, colors[i]);
+		//rectan->PaintRect(pDC);
+		rectan.PaintRect(pDC);
+	}
 }
 
 
-void CSortAppView::OnAllSort()
+void CSortAppView::drawSorts(CDC * pDC, CSortAppDoc * pDoc)
 {
-	// TODO: Add your command handler code here
+	int status = pDoc->getSortStatus();
+	if (status == 1) {  // sortowania proste
+		drawRectangle(pDC, 3);
+	}
+	else if (status == 2) { // sortowania szybkie
+		drawRectangle(pDC, 2);
+	}
+	else if (status == 3) { // sortowania wszystkie
+		drawRectangle(pDC, 6);
+	}
 }

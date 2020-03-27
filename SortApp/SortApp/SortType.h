@@ -1,5 +1,5 @@
 #pragma once
-#define TAB_SIZE 50000
+#define TAB_SIZE 5000
 #include <time.h>
 
 class SortType

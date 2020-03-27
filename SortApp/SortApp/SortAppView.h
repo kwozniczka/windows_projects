@@ -13,15 +13,8 @@
 #define PURPLE RGB(230, 153, 255)
 #define YELLOW RGB(255, 255, 179)
 
-#include <vector>
 
-#include "SortType.h"
-#include "InsertSort.h"
-#include "BubbleSort.h"
-#include "HalfSort.h"
-#include "HeapSort.h"
-#include "SelectSort.h"
-#include "QuickSort.h"
+
 
 
 static COLORREF colors[] = { BLUE, PINK, GREEN, PEACH, PURPLE, YELLOW };
@@ -62,13 +55,11 @@ protected:
 
 private:
 	CRect* m_pClientRect;
-	int* tab; 
-	std::vector<SortType*> sorts;
 
-public:
-	afx_msg void OnSimpleSort();
-	afx_msg void OnQuickSort();
-	afx_msg void OnAllSort();
+private:
+	void drawPlot(CDC* pDC);
+	void drawRectangle(CDC* pDC, int amount);
+	void drawSorts(CDC * pDC, CSortAppDoc * pDoc);
 };
 
 #ifndef _DEBUG  // debug version in SortAppView.cpp

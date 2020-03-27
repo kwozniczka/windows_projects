@@ -22,6 +22,9 @@
 IMPLEMENT_DYNCREATE(CSortAppDoc, CDocument)
 
 BEGIN_MESSAGE_MAP(CSortAppDoc, CDocument)
+	ON_COMMAND(ID_PROSTE, &CSortAppDoc::OnSimpleSorts)
+	ON_COMMAND(ID_SZYBKIE, &CSortAppDoc::OnQuickSorts)
+	ON_COMMAND(ID_WSZYSTKIE, &CSortAppDoc::OnAllSorts)
 END_MESSAGE_MAP()
 
 
@@ -30,6 +33,20 @@ END_MESSAGE_MAP()
 CSortAppDoc::CSortAppDoc()
 {
 	// TODO: add one-time construction code here
+
+	tab = new int[TAB_SIZE];
+	srand(time(NULL));
+	for (int i = 0; i < TAB_SIZE; ++i)
+		tab[i] = rand() % 1000;
+
+	sorts.push_back(new InsertSort(tab));
+	sorts.push_back(new HeapSort(tab));
+	sorts.push_back(new BubbleSort(tab));
+	sorts.push_back(new HalfSort(tab));
+	sorts.push_back(new SelectSort(tab));
+	sorts.push_back(new QuickSort(tab));
+
+	sortStatus = 3;
 
 }
 
@@ -41,6 +58,8 @@ BOOL CSortAppDoc::OnNewDocument()
 {
 	if (!CDocument::OnNewDocument())
 		return FALSE;
+
+	countMaxSortTime();
 
 	// TODO: add reinitialization code here
 	// (SDI documents will reuse this document)
@@ -66,6 +85,7 @@ void CSortAppDoc::Serialize(CArchive& ar)
 }
 
 #ifdef SHARED_HANDLERS
+
 
 // Support for thumbnails
 void CSortAppDoc::OnDrawThumbnail(CDC& dc, LPRECT lprcBounds)
@@ -98,6 +118,9 @@ void CSortAppDoc::InitializeSearchContent()
 	// For example:  strSearchContent = _T("point;rectangle;circle;ole object;");
 	SetSearchContent(strSearchContent);
 }
+
+
+
 
 void CSortAppDoc::SetSearchContent(const CString& value)
 {
@@ -135,3 +158,52 @@ void CSortAppDoc::Dump(CDumpContext& dc) const
 
 
 // CSortAppDoc commands
+
+int CSortAppDoc::getSortStatus()
+{
+	return sortStatus;
+}
+
+unsigned int CSortAppDoc::getMaxSortTime()
+{
+	if (sortStatus == 1 || sortStatus == 3)
+		return maxSimpleSortsTime;
+	return maxQuickSortsTime;
+}
+
+void CSortAppDoc::countMaxSortTime()
+{
+	unsigned int time = 0;
+	for (SortType* sort : sorts) {
+		time = sort->GetSortTime();
+		if (sort->GetSortType() == 1) { // to tutaj mamy proste sortowania
+			if (maxSimpleSortsTime < time)
+				maxSimpleSortsTime = time;
+		}
+		else {
+			if (maxQuickSortsTime < time)
+				maxQuickSortsTime = time;
+		}
+	}
+}
+
+
+void CSortAppDoc::OnSimpleSorts()
+{
+	sortStatus = 1;
+	UpdateAllViews(NULL);
+}
+
+
+void CSortAppDoc::OnQuickSorts()
+{
+	sortStatus = 2;
+	UpdateAllViews(NULL);
+}
+
+
+void CSortAppDoc::OnAllSorts()
+{
+	sortStatus = 3;
+	UpdateAllViews(NULL);
+}
