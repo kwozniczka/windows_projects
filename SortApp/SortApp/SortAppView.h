@@ -55,11 +55,15 @@ protected:
 
 private:
 	CRect* m_pClientRect;
+	CFont* m_pFontNums;
+	CFont* m_pFontNames;
+	
 
 private:
 	void drawPlot(CDC* pDC);
 	void drawRectangle(CDC* pDC, int amount);
 	void drawSorts(CDC * pDC, CSortAppDoc * pDoc);
+	void drawScale(CDC* pDC, CSortAppDoc * pDoc);
 };
 
 #ifndef _DEBUG  // debug version in SortAppView.cpp

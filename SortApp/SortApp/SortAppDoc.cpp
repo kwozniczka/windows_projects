@@ -171,11 +171,24 @@ unsigned int CSortAppDoc::getMaxSortTime()
 	return maxQuickSortsTime;
 }
 
+unsigned int CSortAppDoc::roundMaxSortsTime(unsigned int sortTime)
+{
+	
+	int r;
+	if (sortTime % 20 == 0)
+		return sortTime + 20;
+	else {
+		r = sortTime - (int)(sortTime / 20) * 20;
+		sortTime = sortTime + (20 - r);
+		return sortTime;
+	}
+}
+
 void CSortAppDoc::countMaxSortTime()
 {
 	unsigned int time = 0;
 	for (SortType* sort : sorts) {
-		time = sort->GetSortTime();
+		time = roundMaxSortsTime(sort->GetSortTime());
 		if (sort->GetSortType() == 1) { // to tutaj mamy proste sortowania
 			if (maxSimpleSortsTime < time)
 				maxSimpleSortsTime = time;

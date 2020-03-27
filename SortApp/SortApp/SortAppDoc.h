@@ -69,5 +69,6 @@ private:
 	int sortStatus;  // 1 - proste, 2 - szybkie
 	unsigned int maxSimpleSortsTime;
 	unsigned int maxQuickSortsTime;
+	unsigned int roundMaxSortsTime(unsigned int sortTime);
 	void countMaxSortTime();
 };

@@ -4,6 +4,12 @@
 //
 #define IDD_ABOUTBOX                    100
 #define IDP_OLE_INIT_FAILED             100
+#define IDS_BUBBLE_SORT                 101
+#define IDS_INSERTION_SORT              102
+#define IDS_HALF_SORT                   103
+#define IDS_SELECTION_SORT              104
+#define IDS_QUICK_SORT                  105
+#define IDS_HEAP_SORT                   106
 #define IDR_MAINFRAME                   128
 #define IDR_SortAppTYPE                 130
 #define ID_PROSTE                       32772
