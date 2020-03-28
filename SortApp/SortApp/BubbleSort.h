@@ -1,6 +1,7 @@
 #pragma once
 #include "SortType.h"
 
+
 class BubbleSort : public SortType
 {
 public:

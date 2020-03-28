@@ -13,6 +13,8 @@
 
 #include <propkey.h>
 
+#define SIZE_LINES 20
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -39,14 +41,16 @@ CSortAppDoc::CSortAppDoc()
 	for (int i = 0; i < TAB_SIZE; ++i)
 		tab[i] = rand() % 1000;
 
-	sorts.push_back(new InsertSort(tab));
-	sorts.push_back(new HeapSort(tab));
 	sorts.push_back(new BubbleSort(tab));
-	sorts.push_back(new HalfSort(tab));
 	sorts.push_back(new SelectSort(tab));
+	sorts.push_back(new InsertSort(tab));
+	sorts.push_back(new HalfSort(tab));
+	sorts.push_back(new HeapSort(tab));
 	sorts.push_back(new QuickSort(tab));
-
+	
 	sortStatus = 3;
+	maxSimpleSortsTime = 0;
+	maxQuickSortsTime = 0;
 
 }
 
@@ -60,6 +64,8 @@ BOOL CSortAppDoc::OnNewDocument()
 		return FALSE;
 
 	countMaxSortTime();
+	fillVectorsWithTimeScale();
+	
 
 	// TODO: add reinitialization code here
 	// (SDI documents will reuse this document)
@@ -171,6 +177,14 @@ unsigned int CSortAppDoc::getMaxSortTime()
 	return maxQuickSortsTime;
 }
 
+std::vector<unsigned int> CSortAppDoc::getTimeVector()
+{
+	if (sortStatus == 3 || sortStatus == 1)
+		return simpleSortsTimes;
+	else if (sortStatus == 2)
+		return quickSortsTimes;
+}
+
 unsigned int CSortAppDoc::roundMaxSortsTime(unsigned int sortTime)
 {
 	
@@ -178,7 +192,7 @@ unsigned int CSortAppDoc::roundMaxSortsTime(unsigned int sortTime)
 	if (sortTime % 20 == 0)
 		return sortTime + 20;
 	else {
-		r = sortTime - (int)(sortTime / 20) * 20;
+		r = sortTime - (unsigned int)(sortTime / 20) * 20;
 		sortTime = sortTime + (20 - r);
 		return sortTime;
 	}
@@ -190,14 +204,32 @@ void CSortAppDoc::countMaxSortTime()
 	for (SortType* sort : sorts) {
 		time = roundMaxSortsTime(sort->GetSortTime());
 		if (sort->GetSortType() == 1) { // to tutaj mamy proste sortowania
-			if (maxSimpleSortsTime < time)
-				maxSimpleSortsTime = time;
+			if (this->maxSimpleSortsTime < time)
+				this->maxSimpleSortsTime = time;
 		}
 		else {
-			if (maxQuickSortsTime < time)
-				maxQuickSortsTime = time;
+			if (this->maxQuickSortsTime < time)
+				this->maxQuickSortsTime = time;
 		}
 	}
+
+}
+
+void CSortAppDoc::fillVectorsWithTimeScale()
+{
+
+	unsigned int temp;
+	unsigned int temp2;
+	for (int i = 0; i < SIZE_LINES; ++i)
+	{
+		temp = this->maxSimpleSortsTime - (this->maxSimpleSortsTime / 20) * i;
+		this->simpleSortsTimes.push_back(temp);
+
+		temp2 = this->maxQuickSortsTime - (this->maxQuickSortsTime / 20) * i;
+		this->quickSortsTimes.push_back(temp2);
+	}
+	simpleSortsTimes.push_back(0);
+	quickSortsTimes.push_back(0);
 }
 
 

@@ -7,7 +7,7 @@ QuickSort::QuickSort(int * t) : SortType(t)
 	type = 2;
 	l = 0;
 	p = size - 1; 
-	name = "Quick";
+	name.LoadStringW(IDS_QUICK_SORT);
 }
 
 

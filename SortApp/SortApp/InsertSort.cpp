@@ -5,7 +5,7 @@
 InsertSort::InsertSort(int * t) : SortType(t)
 {
 	type = 1;
-	name = "Insert";
+	name.LoadStringW(IDS_INSERTION_SORT);
 }
 
 

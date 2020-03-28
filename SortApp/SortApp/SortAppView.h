@@ -61,7 +61,6 @@ private:
 
 private:
 	void drawPlot(CDC* pDC);
-	void drawRectangle(CDC* pDC, int amount);
 	void drawSorts(CDC * pDC, CSortAppDoc * pDoc);
 	void drawScale(CDC* pDC, CSortAppDoc * pDoc);
 };

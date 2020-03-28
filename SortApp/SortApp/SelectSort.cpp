@@ -5,7 +5,7 @@
 SelectSort::SelectSort(int * t) : SortType(t)
 {
 	type = 1;
-	name = "Select";
+	name.LoadStringW(IDS_SELECTION_SORT);
 }
 
 

@@ -57,13 +57,14 @@ protected:
 #endif // SHARED_HANDLERS
 	afx_msg void OnSimpleSorts();
 	afx_msg void OnQuickSorts();
-	afx_msg void OnAllSorts();\
+	afx_msg void OnAllSorts();
 
 public:
 	int* tab;
 	std::vector<SortType*> sorts;
 	int getSortStatus();
 	unsigned int getMaxSortTime();
+	std::vector<unsigned int> getTimeVector();
 
 private:
 	int sortStatus;  // 1 - proste, 2 - szybkie
@@ -71,4 +72,7 @@ private:
 	unsigned int maxQuickSortsTime;
 	unsigned int roundMaxSortsTime(unsigned int sortTime);
 	void countMaxSortTime();
+	std::vector<unsigned int> simpleSortsTimes;
+	std::vector<unsigned int> quickSortsTimes;
+	void fillVectorsWithTimeScale();
 };

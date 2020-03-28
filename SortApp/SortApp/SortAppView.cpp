@@ -55,7 +55,7 @@ CSortAppView::CSortAppView()
 	logFontNums.lfCharSet = DEFAULT_CHARSET;
 	logFontNums.lfWeight = FW_NORMAL;
 	logFontNums.lfHeight = -12;
-	logFontNums.lfWidth = -8;
+	logFontNums.lfWidth = -6;
 
 	if (!m_pFontNums->CreateFontIndirect(&logFontNums))
 	{
@@ -74,8 +74,8 @@ CSortAppView::CSortAppView()
 
 	logFontNames.lfCharSet = DEFAULT_CHARSET;
 	logFontNames.lfWeight = FW_NORMAL;
-	logFontNames.lfHeight = -24;
-	logFontNames.lfWidth = -10;
+	logFontNames.lfHeight = -12;
+	logFontNames.lfWidth = -6;
 	
 
 
@@ -112,16 +112,9 @@ void CSortAppView::OnDraw(CDC* pDC)
 
 	
 	drawPlot(pDC);
-	drawSorts(pDC, pDoc);
 	drawScale(pDC, pDoc);
-
-
-	/*
-	for (int i = 0; i < pDoc->sorts.size(); i++) {
-		CString str1;
-		str1.Format(L"%d", (int)pDoc->sorts[i]->GetSortTime());
-		pDC->TextOutW(10, 30*(i+1), str1);
-	}*/
+	drawSorts(pDC, pDoc);
+	
 	
 }
 
@@ -181,41 +174,72 @@ void CSortAppView::drawPlot(CDC * pDC)
 
 }
 
-void CSortAppView::drawRectangle(CDC * pDC, int amount)
+void CSortAppView::drawSorts(CDC * pDC, CSortAppDoc * pDoc)
 {
+	
+	int status = pDoc->getSortStatus();
+	unsigned int time = 0;
+	CString name;
 
-	POINT leftTop;
-	POINT rightBottom;
+	CFont* pOldFont = pDC->SelectObject(m_pFontNames);
 
-	for (int i = 0; i < amount; ++i)
+	int i = 0;
+	
+	for (SortType* sort : pDoc->sorts)
 	{
+		if (status == 1)
+		{
+			if (sort->GetSortType() == 1)
+			{
+				time = sort->GetSortTime();
+				name = sort->GetSortName();
+			}
+			else
+				continue;
+		}
+		else if (status == 2)
+		{
+			if (sort->GetSortType() == 2)
+			{
+				time = sort->GetSortTime();
+				name = sort->GetSortName();
+			}
+			else
+				continue;
+		}
+		else if (status == 3)
+		{
+			time = sort->GetSortTime();
+			name = sort->GetSortName();
+		}
+
+		CString str;
+		str.Format(L"%d", sort->GetSortTime());
+		pDC->TextOutW(600, 30 * (i + 1), str);
+
+
+		POINT leftTop;
+		POINT rightBottom;
+
 		leftTop.x = START + i*(RECT_WIDTH + RIGHT_SHIFT);
-		leftTop.y = 0.35* m_pClientRect->Height();
+		leftTop.y = (0.8*m_pClientRect->Height()) * (double)(1 - (double)time / (double)pDoc->getMaxSortTime()) + 0.1*m_pClientRect->Height();
 		rightBottom.x = START + i*(RECT_WIDTH + RIGHT_SHIFT) + RECT_WIDTH;
 		rightBottom.y = 0.9 * m_pClientRect->Height();
 
-		//CColorRect* rectan = new CColorRect(leftTop, rightBottom, 10, RED, colors[i]);
-		CRect r(leftTop, rightBottom);
-		CColorRect rectan(&r, 10, RED, colors[i]);
-		//rectan->PaintRect(pDC);
+		CRect r1(leftTop, rightBottom);
+		CColorRect rectan(&r1, 1, RED, colors[i]);
 		rectan.PaintRect(pDC);
-	}
-}
 
 
-void CSortAppView::drawSorts(CDC * pDC, CSortAppDoc * pDoc)
-{
-	int status = pDoc->getSortStatus();
-	if (status == 1) {  // sortowania proste
-		drawRectangle(pDC, 3);
+		pDC->TextOutW(rightBottom.x - RECT_WIDTH, rightBottom.y + 8, name);
+
+		i++;
 	}
-	else if (status == 2) { // sortowania szybkie
-		drawRectangle(pDC, 2);
-	}
-	else if (status == 3) { // sortowania wszystkie
-		drawRectangle(pDC, 6);
-	}
+	pDC->SelectObject(pOldFont);
+
+
 }
+
 
 void CSortAppView::drawScale(CDC * pDC, CSortAppDoc * pDoc)
 {
@@ -224,18 +248,25 @@ void CSortAppView::drawScale(CDC * pDC, CSortAppDoc * pDoc)
 	std::pair<int, int> p; 
 	std::vector<std::pair<int, int>> points;
 	
-	for (int i = 0; i < SIZE_LINES; i++) {
+	for (int i = 0; i < SIZE_LINES+1; i++) {
 		p.first = START_COORD - 50;
-		p.second = (0.8*m_pClientRect->bottom * i / SIZE_LINES) + 0.1*m_pClientRect->bottom;
+		p.second = (0.8*m_pClientRect->bottom * i / SIZE_LINES) + 0.1*m_pClientRect->bottom - 7;
 		points.push_back(p);
 	}
 	
-	CFont* pOldFont = pDC->SelectObject(m_pFontNums);
-	COLORREF oldColor = pDC->SetTextColor(RGB(0,0,0));
-	CString str = L"1024";
-	pDC->TextOutW(points[0].first, points[0].second, str);
-	pDC->SelectObject(pOldFont);
 	
+
+	CFont* pOldFont = pDC->SelectObject(m_pFontNums);
+	std::vector<unsigned int> times = pDoc->getTimeVector();
+
+	for (int i = 0; i < SIZE_LINES + 1; ++i)
+	{
+		CString str;
+		str.Format(L"%d", (int)times[i]);
+		pDC->TextOutW(points[i].first, points[i].second, str);
+	}
+
+	pDC->SelectObject(pOldFont);
 
 
 }

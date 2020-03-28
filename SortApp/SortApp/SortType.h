@@ -1,6 +1,7 @@
 #pragma once
-#define TAB_SIZE 5000
+#define TAB_SIZE 30000
 #include <time.h>
+#include "Resource.h"
 
 class SortType
 {
@@ -21,7 +22,7 @@ protected:
 	int tab[TAB_SIZE];
 	CString name;
 	int size = TAB_SIZE;
-	int type = -1; //  w klasach dziedziczacych : 1 - proste, 2 - szybkie
+	int type = 0; //  w klasach dziedziczacych : 1 - proste, 2 - szybkie
 	unsigned int sortingTime = -1; 
 	
 };
